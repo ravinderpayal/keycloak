@@ -158,8 +158,9 @@ public class FreeMarkerEmailTemplateProvider implements EmailTemplateProvider {
     public void sendExecuteActions(String link, long expirationInMinutes) throws EmailException {
         Map<String, Object> attributes = new HashMap<>(this.attributes);
         addLinkInfoIntoAttributes(link, expirationInMinutes, attributes);
-
-        send("executeActionsSubject", "executeActions.ftl", attributes);
+        List<Object> subjectAttrs = Arrays.asList(getRealmName());
+        // In theme/email/messages/executeActionsSubject realm-name can be added using {0}
+        send("executeActionsSubject", subjectAttrs, "executeActions.ftl", attributes);
     }
 
     @Override
